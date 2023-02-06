@@ -1,0 +1,48 @@
+Section 3:
+Diff bet writeFileSync() and writeFile():
+writefileSync method of file system module of node - the diff bet writeFileSync and writeFile is that Sync stands for Synchronous, which will block code execution until a file is created.
+
+REPL - Read Evaluate Print Loop - The one where we write node code in terminal by writing node and thereafter whatever we want.
+
+Events in node.js:
+Multiple events are there, like data, end and all. Data is for parsing the body,
+and end is for further process of data being parsed.
+
+Req.on() events :
+1. close
+2. data
+3. end
+4. error
+5. pause
+6. readable
+7. resume
+
+Important notes:
+=> Node.js uses only one single javascript thread.
+
+Video no 37:
+=> Right at the beginning of our code, node.js automatically starts the event Loop, this is basically responsible for hadnling event callbacks.
+=> Event loop will only handle callbacks...
+=> Remember that event loop is not responsible for handling file operations, event loop is only responsible for the callbacks which we may have set in out writeFile and writeFileSync functions...
+=> file system (fs) tasks are been assigned to "Worker Pool" which is handled by node.js...
+=> Means that, worker pool is responsible for reading a file and all other operations and it will simplt tell the callbacks to run the callbacks function, and all the callback functions are handled by the event loop...
+=> Node.js will handle timer callbacks first and then it will handle the remaining callbacks like file operations and all.
+
+=> So firstly, "Timer callbacks", then any "IO related callbacks", and other "Event callbacks", then setImmediate(), then all the "Close callbacks", and all the close callbacks are handled seperately.
+And then at the end, it will check if there are more events to be executed, by checking the refs counter.
+refs==0, is the counter which nodejs uses to keep track of the callbacks that needs to be executed.
+At any point of time, if any new event or callback is been registered, it increments the count and  for each handled callbacks, it decrements the counter, it only executes the process.exit(method to exit the event loop) method when there are no more callbacks or events that needs to be executed...
+
+
+-------------------------------------------------------------------------
+
+Section 4:
+=>npm start is a special script, so it just runs the file, which we put in "start": "node app.js", but is there are scripts which are not the special types like the "start", then you have to use npm run command - example: "npm run scriptname".
+=> npm install nodemon --save - this will install as a production dependency
+=> npm install nodemon --save-dev - this will install as a development dependency
+=> npm install nodemon -g - this will install a package globally, i.e. you can use it any project...
+
+Types of errors:
+1. Syntax error
+2. Runtime errors - errors which dont arise at the time of compilation but at runtime, example: not returning res.end() and it simply goes running till the last line which we dont needed...   
+3. Logical errors - errors which doesn't show errror(difficult to find), it does not run the program the way it should...
